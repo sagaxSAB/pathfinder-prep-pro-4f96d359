@@ -95,13 +95,8 @@ async function callAI(body: any) {
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
-  try {
-    const { action } = await req.json().then(b => ({ ...b, _: null })).catch(() => ({ action: null }));
-  } catch (_) {}
-
-  // re-read body properly
   let body: any;
-  try { body = await req.clone().json(); } catch { body = {}; }
+  try { body = await req.json(); } catch { body = {}; }
   const action = body?.action;
 
   try {
